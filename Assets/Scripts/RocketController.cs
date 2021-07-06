@@ -8,17 +8,33 @@ public class RocketController : MonoBehaviour
     [SerializeField] float tiltingForce = 100f;
     bool thrust = false;
     Rigidbody rgdBody;
+    float angletoRotate = 60f;
+    float speed = 1f;
+    Quaternion targetRotation;
     // Start is called before the first frame update
     private void Awake()
     {
         rgdBody = GetComponent<Rigidbody>();
     }
- 
 
+    private void Start()
+    {
+        targetRotation = transform.rotation;
+    }
     // Update is called once per frame
     void Update()
     {
-        FlyController();
+        //   FlyController();
+        RotateTest();
+    }
+    void RotateTest()
+    {
+       
+        if (Input.GetKey(KeyCode.Space))
+        {
+            targetRotation *= Quaternion.AngleAxis(angletoRotate ,Vector3.right);
+        }
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, speed * Time.deltaTime);
     }
     void FlyController()
     {

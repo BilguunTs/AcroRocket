@@ -5,20 +5,26 @@ using UnityEngine;
 public class MissileController : MonoBehaviour
 {
     [SerializeField] GameObject target;
-    
+    private Rigidbody rgB;
     // Start is called before the first frame update
     void Start()
     {
-      
+        rgB = GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target.transform.position, 1f*Time.deltaTime);
+
+     
     }
-    void AutoTargetController()
+
+    private void FixedUpdate()
     {
+
+        Vector3 targetDirection = transform.position - target.transform.position;
+        Vector3 rotationDirection = Vector3.RotateTowards(transform.localPosition, targetDirection, 360, 0.00f);
+        transform.rotation = Quaternion.LookRotation(rotationDirection);
 
     }
 }
